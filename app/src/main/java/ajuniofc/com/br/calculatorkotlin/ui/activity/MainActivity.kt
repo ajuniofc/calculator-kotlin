@@ -1,8 +1,7 @@
 package ajuniofc.com.br.calculatorkotlin.ui.activity
 
 import ajuniofc.com.br.calculatorkotlin.R
-import ajuniofc.com.br.calculatorkotlin.model.Operation
-import ajuniofc.com.br.calculatorkotlin.model.Processador
+import ajuniofc.com.br.calculatorkotlin.model.*
 import android.support.v7.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
@@ -26,6 +25,7 @@ class MainActivity : AppCompatActivity() {
             display?.text = value.toString()
         }
     private var userIsInMidleOfTyping = false
+    private var isCalculatorBasic = true
 
     private val operationMap = mapOf<String,Operation>("+" to Operation.SOMAR,
                                     "-" to Operation.SUBTRAIR,
@@ -33,7 +33,7 @@ class MainActivity : AppCompatActivity() {
                                     "/" to Operation.DIVIDIR,
                                     "!" to Operation.FATORIAL,
                                     "²" to Operation.QUADRADO,
-                                    "¬" to Operation.RAIZ,
+                                    "√" to Operation.RAIZ,
                                     "C" to Operation.LIMPAR,
                                     "=" to Operation.IGUAL)
 
@@ -75,24 +75,57 @@ class MainActivity : AppCompatActivity() {
         userIsInMidleOfTyping = false
         val button = view as Button
         val keyOperation = button.text.toString()
-        operacao = operationMap[keyOperation]
+        val operation = operationMap[keyOperation]
 
-        when(operacao){
+        when(operation){
             Operation.LIMPAR -> redo()
-            Operation.SOMAR -> setNumber1()
-            Operation.SUBTRAIR -> setNumber1()
-            Operation.MULTIPLICAR -> setNumber1()
-            Operation.DIVIDIR -> setNumber1()
+            Operation.SOMAR -> {
+                setNumber1()
+                displayValue = 0.0
+                operacao = operation
+            }
+            Operation.SUBTRAIR -> {
+                setNumber1()
+                displayValue = 0.0
+                operacao = operation
+            }
+            Operation.MULTIPLICAR -> {
+                setNumber1()
+                displayValue = 0.0
+                operacao = operation
+            }
+            Operation.DIVIDIR -> {
+                setNumber1()
+                displayValue = 0.0
+                operacao = operation
+            }
+            Operation.RAIZ -> calculoAvancado(operation)
+            Operation.QUADRADO -> calculoAvancado(operation)
+            Operation.FATORIAL -> calculoAvancado(operation)
             Operation.IGUAL -> {
+                if (isCalculatorBasic) {
                     setNumber2()
-                    calcula()
-                    }
-
+                }
+                calcula()
+            }
         }
     }
 
-    fun calcula(){
+    private fun calculoAvancado(operation: Operation?) {
+        operacao = operation
+        calcula()
+    }
 
+    // Verifica qual a operacao o usuario escolheu e realiza o calculo
+    fun calcula(){
+        when(operacao) {
+            Operation.SOMAR -> processamento = Soma(numero1 = resultado, numero2 = operando)
+            Operation.SUBTRAIR -> processamento = Subtracao(numero1 = resultado, numero2 = operando)
+            Operation.MULTIPLICAR -> processamento = Multiplicacao(numero1 = resultado, numero2 = operando)
+            Operation.DIVIDIR -> processamento = Divisao(numero1 = resultado, numero2 = operando)
+        }
+        //
+        displayValue = processamento?.calcular()!!
     }
 
     fun setNumber1(){

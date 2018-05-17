@@ -11,6 +11,6 @@ class Raiz(numero: Double) : OperacaoAvancada(numero), Processador {
     }
 
     override fun getSimboloOperacao(): String {
-        return "¬"
+        return "√"
     }
 }
