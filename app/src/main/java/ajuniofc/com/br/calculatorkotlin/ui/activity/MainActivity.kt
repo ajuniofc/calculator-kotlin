@@ -37,7 +37,7 @@ class MainActivity : AppCompatActivity() {
         }
     private var userIsInMidleOfTyping = false
     private var isCalculatorBasic = true
-    private var isFirstDigit = true
+//    private var isFirstDigit = true
     private var isFirstNumber = true
 
     // Mapa de operacoes
@@ -77,7 +77,7 @@ class MainActivity : AppCompatActivity() {
     fun inicializar(){
         displayValue = 0.0
         userIsInMidleOfTyping = false
-        isFirstDigit = true
+//        isFirstDigit = true
         resultado = 0.0
         operando = 0.0
         operacao = Operation.LIMPAR
@@ -98,8 +98,14 @@ class MainActivity : AppCompatActivity() {
             button = view
         }
         val digit: String = button?.text.toString()
-        if(!isFirstDigit || !digit.equals("0")){
-            isFirstDigit = false
+        // Condição que evita digitar quantos zeros quiser no inicio do numero
+        if (digit.equals("0") && !userIsInMidleOfTyping ){
+            if (displayValue == 0.0 || !isFirstNumber || isFirstNumber){
+                display?.text = "0"
+            }
+        }else{
+//        if(!isFirstDigit || !digit.equals("0")){
+//            isFirstDigit = false
             val currentValue: String = display?.text.toString()
 
             if (userIsInMidleOfTyping) {
@@ -137,12 +143,13 @@ class MainActivity : AppCompatActivity() {
                 }
                 calcula()
                 userIsInMidleOfTyping = false
-                isFirstDigit = true
+//                isFirstDigit = true
                 isFirstNumber = true
             }
         }
     }
 
+    // Verifica se é conta simples ou continua
     private fun handlerOperation(operation: Operation) {
         if (isFirstNumber) {
             setNumber1()
@@ -152,7 +159,7 @@ class MainActivity : AppCompatActivity() {
             calcula()
         }
         operacao = operation
-        isFirstDigit = true
+//        isFirstDigit = true
         userIsInMidleOfTyping = false
     }
 
@@ -195,6 +202,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Mostra a conta realizada na tela
     private fun mostraConta() {
         if (isCalculatorBasic) {
             conta?.text = "$resultado ${processamento?.getSimboloOperacao()} $operando ="
