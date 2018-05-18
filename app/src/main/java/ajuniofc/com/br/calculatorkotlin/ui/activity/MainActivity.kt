@@ -126,6 +126,7 @@ class MainActivity : AppCompatActivity() {
                 }
                 calcula()
                 userIsInMidleOfTyping = false
+                isFirstDigit = true
             }
         }
     }
@@ -158,7 +159,8 @@ class MainActivity : AppCompatActivity() {
     // guarda o primeiro numero digitado
     fun setNumber1(operation: Operation){
         resultado = displayValue
-        displayValue = 0.0
+        // mostra o valor no display como double
+        displayValue = resultado
         operacao = operation
         userIsInMidleOfTyping = false
         isFirstDigit = true
