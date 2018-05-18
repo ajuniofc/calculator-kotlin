@@ -37,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private var userIsInMidleOfTyping = false
     private var isCalculatorBasic = true
     private var isFirstDigit = true
+    private var isFirstNumber = true
 
     // Mapa de operacoes
     private val operationMap = mapOf<String,Operation>("+" to Operation.SOMAR,
@@ -79,6 +80,7 @@ class MainActivity : AppCompatActivity() {
         operando = 0.0
         operacao = Operation.LIMPAR
         processamento = null
+        isFirstNumber = true
     }
 
     // Função que pega o numero tocado e coloca no display da tela
@@ -109,10 +111,10 @@ class MainActivity : AppCompatActivity() {
 
         when(operation){
             Operation.LIMPAR -> redo()
-            Operation.SOMAR -> setNumber1(operation)
-            Operation.SUBTRAIR -> setNumber1(operation)
-            Operation.MULTIPLICAR -> setNumber1(operation)
-            Operation.DIVIDIR -> setNumber1(operation)
+            Operation.SOMAR -> handlerOperation(operation)
+            Operation.SUBTRAIR -> handlerOperation(operation)
+            Operation.MULTIPLICAR -> handlerOperation(operation)
+            Operation.DIVIDIR -> handlerOperation(operation)
             Operation.RAIZ -> calculo(operation)
             Operation.QUADRADO -> calculo(operation)
             Operation.FATORIAL -> calculo(operation)
@@ -127,8 +129,34 @@ class MainActivity : AppCompatActivity() {
                 calcula()
                 userIsInMidleOfTyping = false
                 isFirstDigit = true
+                isFirstNumber = true
             }
         }
+    }
+
+    private fun handlerOperation(operation: Operation) {
+        if (isFirstNumber) {
+            setNumber1()
+            isFirstNumber = false
+        }else{
+            setNumber2()
+            calcula()
+        }
+        operacao = operation
+        isFirstDigit = true
+        userIsInMidleOfTyping = false
+    }
+
+    // guarda o primeiro numero digitado
+    fun setNumber1(){
+        resultado = displayValue
+        // mostra o valor no display como double
+        displayValue = resultado
+    }
+
+    // guarda o segundo numero digitado
+    fun setNumber2(){
+        operando = displayValue
     }
 
     // Sobrecarga que realiza o calculo avancado
@@ -154,21 +182,6 @@ class MainActivity : AppCompatActivity() {
             resultado = processamento?.calcular()!!
             displayValue = resultado
         }
-    }
-
-    // guarda o primeiro numero digitado
-    fun setNumber1(operation: Operation){
-        resultado = displayValue
-        // mostra o valor no display como double
-        displayValue = resultado
-        operacao = operation
-        userIsInMidleOfTyping = false
-        isFirstDigit = true
-    }
-
-    // guarda o segundo numero digitado
-    fun setNumber2(){
-        operando = displayValue
     }
 
     // Função que apaga o ultimo numero inserido
