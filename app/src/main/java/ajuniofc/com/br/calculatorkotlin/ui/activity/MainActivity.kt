@@ -87,7 +87,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun onAction(view: View){
-        userIsInMidleOfTyping = false
         val button = view as Button
         val keyOperation = button.text.toString()
         val operation = operationMap[keyOperation]
@@ -98,21 +97,25 @@ class MainActivity : AppCompatActivity() {
                 setNumber1()
                 displayValue = 0.0
                 operacao = operation
+                userIsInMidleOfTyping = false
             }
             Operation.SUBTRAIR -> {
                 setNumber1()
                 displayValue = 0.0
                 operacao = operation
+                userIsInMidleOfTyping = false
             }
             Operation.MULTIPLICAR -> {
                 setNumber1()
                 displayValue = 0.0
                 operacao = operation
+                userIsInMidleOfTyping = false
             }
             Operation.DIVIDIR -> {
                 setNumber1()
                 displayValue = 0.0
                 operacao = operation
+                userIsInMidleOfTyping = false
             }
             Operation.RAIZ -> calculoAvancado(operation)
             Operation.QUADRADO -> calculoAvancado(operation)
@@ -122,6 +125,7 @@ class MainActivity : AppCompatActivity() {
                     setNumber2()
                 }
                 calcula()
+                userIsInMidleOfTyping = false
             }
         }
     }
@@ -129,6 +133,7 @@ class MainActivity : AppCompatActivity() {
     private fun calculoAvancado(operation: Operation?) {
         operacao = operation
         calcula()
+        userIsInMidleOfTyping = false
     }
 
     // Verifica qual a operacao o usuario escolheu e realiza o calculo
@@ -143,7 +148,8 @@ class MainActivity : AppCompatActivity() {
             Operation.RAIZ -> processamento = Raiz(displayValue)
         }
         //
-        displayValue = processamento?.calcular()!!
+        val result = processamento?.calcular()!!
+        displayValue = result
     }
 
     fun setNumber1(){
@@ -156,15 +162,19 @@ class MainActivity : AppCompatActivity() {
 
     // Função que apaga o ultimo numero inserido
     fun redo(){
-        val stringValue = display?.text.toString()
-        if (stringValue.isEmpty()){
-            inicializar()
-        }else if(displayValue > 0.0) {
-            val currentValue = stringValue.substring(0, stringValue.lastIndex)
-            display?.text = currentValue
-            if (currentValue.isEmpty()){
+        if(userIsInMidleOfTyping) {
+            val stringValue = display?.text.toString()
+            if (stringValue.isEmpty()) {
                 inicializar()
+            } else if (displayValue > 0.0) {
+                val currentValue = stringValue.substring(0, stringValue.lastIndex)
+                display?.text = currentValue
+                if (currentValue.isEmpty()) {
+                    inicializar()
+                }
             }
+        }else{
+            inicializar()
         }
     }
 
