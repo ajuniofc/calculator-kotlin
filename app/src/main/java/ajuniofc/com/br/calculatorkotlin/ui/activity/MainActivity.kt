@@ -11,6 +11,8 @@ import android.widget.TextView
 import kotlinx.android.synthetic.main.activity_main.*
 
 class MainActivity : AppCompatActivity() {
+
+    // propriedades da activity
     private var processamento: Processador? = null
     private var display: TextView? = null
     private var buttonC: Button? = null
@@ -23,6 +25,7 @@ class MainActivity : AppCompatActivity() {
     private var resultado: Double = 0.0
     private var operando: Double = 0.0
     var operacao: Operation? = null
+    // variavel computada
     private var displayValue: Double
         get(){
             val stringValue = display?.text.toString()
@@ -34,6 +37,7 @@ class MainActivity : AppCompatActivity() {
     private var userIsInMidleOfTyping = false
     private var isCalculatorBasic = true
 
+    // Mapa de operacoes
     private val operationMap = mapOf<String,Operation>("+" to Operation.SOMAR,
                                     "-" to Operation.SUBTRAIR,
                                     "*" to Operation.MULTIPLICAR,
@@ -44,18 +48,20 @@ class MainActivity : AppCompatActivity() {
                                     "C" to Operation.LIMPAR,
                                     "=" to Operation.IGUAL)
 
+    // Funcao do ciclo de vida da activity executada sempre que cria a activity
+    // Faz as ligacoes entre a activity e as views do xml
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         display = calculator_display
         buttonC = calculator_c
+        // adiciona um click longo no botao
         buttonC?.setOnLongClickListener{
             inicializar()
             true
         }
 
         buttonChange = calculator_change
-
         layoutOperations = calculator_operations
         buttonAction1 = calculator_operation1
         buttonAction2 = calculator_operation2
@@ -86,6 +92,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Função que pega a operacao tocada pelo usuario
     fun onAction(view: View){
         val button = view as Button
         val keyOperation = button.text.toString()
@@ -93,30 +100,10 @@ class MainActivity : AppCompatActivity() {
 
         when(operation){
             Operation.LIMPAR -> redo()
-            Operation.SOMAR -> {
-                setNumber1()
-                displayValue = 0.0
-                operacao = operation
-                userIsInMidleOfTyping = false
-            }
-            Operation.SUBTRAIR -> {
-                setNumber1()
-                displayValue = 0.0
-                operacao = operation
-                userIsInMidleOfTyping = false
-            }
-            Operation.MULTIPLICAR -> {
-                setNumber1()
-                displayValue = 0.0
-                operacao = operation
-                userIsInMidleOfTyping = false
-            }
-            Operation.DIVIDIR -> {
-                setNumber1()
-                displayValue = 0.0
-                operacao = operation
-                userIsInMidleOfTyping = false
-            }
+            Operation.SOMAR -> setNumber1(operation)
+            Operation.SUBTRAIR -> setNumber1(operation)
+            Operation.MULTIPLICAR -> setNumber1(operation)
+            Operation.DIVIDIR -> setNumber1(operation)
             Operation.RAIZ -> calculoAvancado(operation)
             Operation.QUADRADO -> calculoAvancado(operation)
             Operation.FATORIAL -> calculoAvancado(operation)
@@ -130,6 +117,7 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    // Realiza o calculo avancado
     private fun calculoAvancado(operation: Operation?) {
         operacao = operation
         calcula()
@@ -147,15 +135,19 @@ class MainActivity : AppCompatActivity() {
             Operation.QUADRADO -> processamento = Quadrado(displayValue)
             Operation.RAIZ -> processamento = Raiz(displayValue)
         }
-        //
-        val result = processamento?.calcular()!!
-        displayValue = result
+        // mostra no display o resultado do calculo
+        displayValue = processamento?.calcular()!!
     }
 
-    fun setNumber1(){
+    // guarda o primeiro numero digitado
+    fun setNumber1(operation: Operation){
         resultado = displayValue
+        displayValue = 0.0
+        operacao = operation
+        userIsInMidleOfTyping = false
     }
 
+    // guarda o segundo numero digitado
     fun setNumber2(){
         operando = displayValue
     }
