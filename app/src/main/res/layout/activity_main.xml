@@ -14,7 +14,6 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:orientation="vertical"
-        android:background="@android:color/darker_gray"
         android:layout_margin="16dp">
 
         <TextView
@@ -41,7 +40,7 @@
         android:layout_marginLeft="16dp"
         android:layout_marginBottom="4dp"
         android:textColor="@android:color/white"
-        android:background="@android:color/holo_orange_dark"
+        android:background="@drawable/shape_button_change"
         android:onClick="onChange"/>
 
     <LinearLayout
@@ -63,7 +62,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/shape_button_action"
             android:gravity="center"
             android:onClick="onAction"
             android:layout_marginRight="4dp">
@@ -78,7 +77,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/shape_button_action"
             android:gravity="center"
             android:onClick="onAction"
             android:layout_marginRight="4dp">
@@ -93,7 +92,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/shape_button_action"
             android:gravity="center"
             android:onClick="onAction"
             android:layout_marginRight="4dp">
@@ -108,7 +107,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/shape_button_action"
             android:gravity="center"
             android:onClick="onAction"
             android:layout_marginRight="4dp">
@@ -134,7 +133,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginRight="4dp">
@@ -148,7 +147,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginLeft="4dp"
@@ -164,7 +163,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginLeft="4dp">
@@ -190,7 +189,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginRight="4dp">
@@ -204,7 +203,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginLeft="4dp"
@@ -220,7 +219,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginLeft="4dp">
@@ -247,7 +246,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginRight="4dp">
@@ -261,7 +260,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginLeft="4dp"
@@ -277,7 +276,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginLeft="4dp">
@@ -304,7 +303,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/shape_button_action"
             android:gravity="center"
             android:onClick="onAction"
             android:longClickable="true"
@@ -319,7 +318,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@android:color/holo_blue_dark"
+            android:background="@drawable/shape_button_number"
             android:gravity="center"
             android:onClick="onNumber"
             android:layout_marginLeft="4dp"
@@ -335,7 +334,7 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1"
-            android:background="@color/colorPrimary"
+            android:background="@drawable/shape_button_action"
             android:gravity="center"
             android:onClick="onAction"
             android:layout_marginLeft="4dp">
