@@ -7,14 +7,17 @@
     android:orientation="vertical"
     tools:context="ajuniofc.com.br.calculatorkotlin.ui.activity.MainActivity">
 
-    <LinearLayout
+    <RelativeLayout
         android:layout_width="match_parent"
-
-
         android:layout_height="0dp"
         android:layout_weight="1"
-        android:orientation="vertical"
         android:layout_margin="16dp">
+
+        <TextView
+            android:id="@+id/calculator_conta"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            tools:text="conta"/>
 
         <TextView
             android:id="@+id/calculator_display"
@@ -28,7 +31,7 @@
             android:layout_gravity="right"
             android:layout_marginRight="8dp"/>
 
-    </LinearLayout>
+    </RelativeLayout>
 
     <Button
         android:id="@+id/calculator_change"

@@ -15,6 +15,7 @@ class MainActivity : AppCompatActivity() {
     // propriedades da activity
     private var processamento: Processador? = null
     private var display: TextView? = null
+    private var conta: TextView? = null
     private var buttonC: Button? = null
     private var buttonChange: Button? = null
     private var layoutOperations: LinearLayout? = null
@@ -56,6 +57,7 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         display = calculator_display
+        conta = calculator_conta
         buttonC = calculator_c
         // adiciona um click longo no botao
         buttonC?.setOnLongClickListener{
@@ -81,10 +83,16 @@ class MainActivity : AppCompatActivity() {
         operacao = Operation.LIMPAR
         processamento = null
         isFirstNumber = true
+        limparContaDisplay()
+    }
+
+    private fun limparContaDisplay() {
+        conta?.text = ""
     }
 
     // Função que pega o numero tocado e coloca no display da tela
     fun onNumber(view: View){
+        limparContaDisplay()
         var button: Button? = null
         if(view is Button){
             button = view
@@ -105,6 +113,7 @@ class MainActivity : AppCompatActivity() {
 
     // Função que pega a operacao tocada pelo usuario
     fun onAction(view: View){
+        limparContaDisplay()
         val button = view as Button
         val keyOperation = button.text.toString()
         val operation = operationMap[keyOperation]
@@ -177,10 +186,24 @@ class MainActivity : AppCompatActivity() {
             Operation.QUADRADO -> processamento = Quadrado(displayValue)
             Operation.RAIZ -> processamento = Raiz(displayValue)
         }
+
+        mostraConta()
         // mostra no display o resultado do calculo
         if(processamento != null) {
             resultado = processamento?.calcular()!!
             displayValue = resultado
+        }
+    }
+
+    private fun mostraConta() {
+        if (isCalculatorBasic) {
+            conta?.text = "$resultado ${processamento?.getSimboloOperacao()} $operando ="
+        }else{
+            if(processamento?.getSimboloOperacao()!!.contains("²")){
+                conta?.text = "$displayValue ${processamento?.getSimboloOperacao()} ="
+            }else {
+                conta?.text = "${processamento?.getSimboloOperacao()} $displayValue ="
+            }
         }
     }
 
