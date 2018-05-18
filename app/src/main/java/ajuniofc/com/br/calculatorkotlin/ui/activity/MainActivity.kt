@@ -24,7 +24,7 @@ class MainActivity : AppCompatActivity() {
     private var buttonAction4: Button? = null
     private var resultado: Double = 0.0
     private var operando: Double = 0.0
-    var operacao: Operation? = null
+    var operacao: Operation? = Operation.LIMPAR
     // variavel computada
     private var displayValue: Double
         get(){
@@ -36,6 +36,7 @@ class MainActivity : AppCompatActivity() {
         }
     private var userIsInMidleOfTyping = false
     private var isCalculatorBasic = true
+    private var isFirstDigit = true
 
     // Mapa de operacoes
     private val operationMap = mapOf<String,Operation>("+" to Operation.SOMAR,
@@ -73,22 +74,30 @@ class MainActivity : AppCompatActivity() {
     fun inicializar(){
         displayValue = 0.0
         userIsInMidleOfTyping = false
+        isFirstDigit = true
         resultado = 0.0
         operando = 0.0
-        operacao = null
+        operacao = Operation.LIMPAR
+        processamento = null
     }
 
     // Função que pega o numero tocado e coloca no display da tela
     fun onNumber(view: View){
-        val button: Button = view as Button
-        val digit: String = button.text.toString()
-        val currentValue: String = display?.text.toString()
+        var button: Button? = null
+        if(view is Button){
+            button = view
+        }
+        val digit: String = button?.text.toString()
+        if(!isFirstDigit || !digit.equals("0")){
+            isFirstDigit = false
+            val currentValue: String = display?.text.toString()
 
-        if (userIsInMidleOfTyping) {
-            display?.text = currentValue + digit
-        }else {
-            display?.text = digit
-            userIsInMidleOfTyping = true
+            if (userIsInMidleOfTyping) {
+                display?.text = currentValue + digit
+            } else {
+                display?.text = digit
+                userIsInMidleOfTyping = true
+            }
         }
     }
 
@@ -104,12 +113,16 @@ class MainActivity : AppCompatActivity() {
             Operation.SUBTRAIR -> setNumber1(operation)
             Operation.MULTIPLICAR -> setNumber1(operation)
             Operation.DIVIDIR -> setNumber1(operation)
-            Operation.RAIZ -> calculoAvancado(operation)
-            Operation.QUADRADO -> calculoAvancado(operation)
-            Operation.FATORIAL -> calculoAvancado(operation)
+            Operation.RAIZ -> calculo(operation)
+            Operation.QUADRADO -> calculo(operation)
+            Operation.FATORIAL -> calculo(operation)
             Operation.IGUAL -> {
                 if (isCalculatorBasic) {
-                    setNumber2()
+                    if(userIsInMidleOfTyping) {
+                        setNumber2()
+                    }else{
+                        operando = resultado
+                    }
                 }
                 calcula()
                 userIsInMidleOfTyping = false
@@ -117,8 +130,8 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    // Realiza o calculo avancado
-    private fun calculoAvancado(operation: Operation?) {
+    // Sobrecarga que realiza o calculo avancado
+    private fun calculo(operation: Operation?) {
         operacao = operation
         calcula()
         userIsInMidleOfTyping = false
@@ -136,7 +149,10 @@ class MainActivity : AppCompatActivity() {
             Operation.RAIZ -> processamento = Raiz(displayValue)
         }
         // mostra no display o resultado do calculo
-        displayValue = processamento?.calcular()!!
+        if(processamento != null) {
+            resultado = processamento?.calcular()!!
+            displayValue = resultado
+        }
     }
 
     // guarda o primeiro numero digitado
@@ -145,6 +161,7 @@ class MainActivity : AppCompatActivity() {
         displayValue = 0.0
         operacao = operation
         userIsInMidleOfTyping = false
+        isFirstDigit = true
     }
 
     // guarda o segundo numero digitado
